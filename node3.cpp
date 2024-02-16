@@ -158,7 +158,7 @@ int main() {
 
   cout << "Sunaikinusss: " << endl;
   destroy(root);
-  root = NULL; // gal kažkaip galima įdėti į funkciją?
+  root = NULL; // gal kažkaip galima įdėti į funkciją??
   printTree(root);
   
   return 0;
