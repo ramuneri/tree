@@ -156,7 +156,7 @@ int main() {
   cout << "Balanced: " << endl;
   printTree(root);
 
-  cout << "Sunaikinus: " << endl;
+  cout << "Sunaikinusss: " << endl;
   destroy(root);
   root = NULL; // gal kažkaip galima įdėti į funkciją?
   printTree(root);
