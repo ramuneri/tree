@@ -1,6 +1,12 @@
 // github'e
-//kaip ir veikia viskas bet nesuprantu
-// Binary Search Tree
+// kaip ir veikia viskas bet nesuprantu
+
+// Binary Search Tree with balancing function
+// hierarchinė duomenų struktūra, kurioje į kiekvieną viršūnę, 
+// išskyrus vieną (šaknį) yra tik vienintelė nuoroda iš kito elemento (viršūnės).
+// Dvejetainiame medyje iš kiekvienos viršūnės yra ne daugiau nei dvi nuorodos į kitus el.
+// Subalansuotame medyje medžio širšūnės kairėje esantis pomedis laiko mažesnę reikšmę nei viršūnė,
+// o esantis dešinėje - didesnę.
 
 // root - šaknis - medžio viršūnė, į ją nėra nuorodų
 #include <iostream>
@@ -13,7 +19,7 @@ struct node { // will be in .h file
 };
 
 struct node *createEmptyTree() { // kaip (?) Constructor Create() - sukuria tuščią ADT
-    return NULL; 
+  return NULL; 
 }
 
 struct node *createNewNode(int item) {
@@ -45,8 +51,8 @@ void printTree(struct node *root, string indent = "", bool last = true) { // toS
       printTree(root->right, indent, true);
   }
 }
+
 struct node *insert(struct node *node, int key) {
-  // if the tree is empty
   if (node == NULL) {
     return createNewNode(key);
   }
@@ -58,27 +64,35 @@ struct node *insert(struct node *node, int key) {
   return node;
 }
 
-// Find the inorder successor
 struct node *minValueNode(struct node *node) {
-  struct node *current = node;
-  // Find the leftmost leaf
+  struct node *current = node; // laikina virsune
   while (current && current->left != NULL)
     current = current->left;
   return current;
 }
-// Deleting a node
+
+struct node *maxValueNode(struct node *node) {
+  struct node *current = node; // laikina virsune
+  while (current && current->right != NULL)
+    current = current->right;
+  return current;
+}
+
 struct node *deleteNode(struct node *root, int key) {
-  // Return if the tree is empty
-  if (root == NULL) return root;
-  // Find the node to be deleted
-  if (key < root->key)
+  if (root == NULL) {
+    return root;
+  }
+  
+  if (key < root->key) {
     root->left = deleteNode(root->left, key);
-  else if (key > root->key)
+  } 
+  else if (key > root->key) {
     root->right = deleteNode(root->right, key);
-  else {
-    // If the node is with only one child or no child
-    if (root->left == NULL) {
-      struct node *temp = root->right;
+  } 
+  else { // rasta virsune kuria reikia istrinti
+  // jei turi tik viena pomedi
+    if (root->left == NULL) { 
+      struct node *temp = root->right; // sukuriama laikina virsune kad neprarasti pomedzio reiksmes
       free(root);
       return temp;
     } else if (root->right == NULL) {
@@ -86,9 +100,10 @@ struct node *deleteNode(struct node *root, int key) {
       free(root);
       return temp;
     }
-    // If the node has two children
+    //?
+    // jei turi du pomedzius
     struct node *temp = minValueNode(root->right);
-    // Place the inorder successor in position of the node to be deleted
+    // istrintos virsunes vieta uzima jos kairysis pomedis
     root->key = temp->key;
     // Delete the inorder successor
     root->right = deleteNode(root->right, temp->key);
@@ -126,10 +141,10 @@ struct node* balance(struct node* root) {
 }
 ///////////
 
-void destroy(struct node *root) {
+void destroy(struct node *root) { // kaip Destructor Done() - sunaikina ADT
     if (root != NULL) {
-        destroy(root->left);  // Sunaikiname kairįjį submedį
-        destroy(root->right); // Sunaikiname dešinįjį submedį
+        destroy(root->left);
+        destroy(root->right);
         free(root); // Atlaisviname atmintį, skirtą dabartiniam mazgui
     }
 }
@@ -140,10 +155,10 @@ int main() {
   root = insert(root, 2);
   root = insert(root, 3);
   root = insert(root, 4);
-  root = insert(root, 5);
+  root = insert(root, -5);
   root = insert(root, 6);
   root = insert(root, 7);
-  root = insert(root, 8);
+  root = insert(root, -8);
   root = insert(root, 9);
   root = insert(root, 10);
   root = insert(root, 11);
@@ -155,6 +170,16 @@ int main() {
   root = balance(root);
   cout << "Balanced: " << endl;
   printTree(root);
+
+  // cout << "Min = " << minValueNode(root)->key << endl;
+  // cout << "Max = " << maxValueNode(root)->key << endl;
+
+  // root = deleteNode(root, 3);
+  // root = deleteNode(root, 11);
+  // cout << "istryne 3, 11" << endl;
+  // cout << "Balanced: " << endl;
+  // printTree(root);
+
 
   cout << "Sunaikinusss: " << endl;
   destroy(root);
