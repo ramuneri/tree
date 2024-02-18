@@ -3,23 +3,24 @@
 
 #include <string>
 
-struct node {
+typedef struct node {
     int key;
     struct node *left;
     struct node *right;
-};
+} Node;
 
-struct node *createEmptyTree();
-struct node *createNewNode(int item);
-void printTree(struct node *root, std::string indent, bool last);
-struct node *insert(struct node *node, int key);
-struct node *minValueNode(struct node *node);
-struct node *maxValueNode(struct node *node);
-struct node *deleteNode(struct node *root, int key);
-int countNodes(struct node* root);
-void storeBSTNodes(struct node* root, struct node* nodes[], int* index);
-struct node* buildTreeUtil(struct node* nodes[], int start, int end);
-struct node* balance(struct node* root);
-void destroy(struct node *root);
+Node *createEmptyTree();
+Node *createNewNode(int item);
+void printTree(Node *root, std::string indent, bool last);
+Node *insert(Node *node, int key);
+Node *minValueNode(Node *node);
+Node *maxValueNode(Node *node);
+Node *deleteNode(Node *root, int key);
+int countNodes(Node* root);
+// void storeNodes(Node* root, Node* nodes[], int* index);
+// Node* buildTree(Node* nodes[], int start, int end);
+Node* balance(Node* root);
+// void destroy(Node *root);
+Node* destroy(Node *root);
 
 #endif // TREE_H

@@ -3,18 +3,18 @@
 #include "tree.h"
 using namespace std;
 
-struct node *createEmptyTree() { // kaip (?) Constructor Create() - sukuria tuščią ADT
+Node *createEmptyTree() { // kaip (?) Constructor Create() - sukuria tuščią ADT
     return NULL;
 }
 
-struct node *createNewNode(int item) {
-    struct node *temp = (struct node*)malloc(sizeof(struct node));
+Node *createNewNode(int item) {
+    Node *temp = (Node*)malloc(sizeof(Node));
     temp->key = item;
     temp->left = temp->right = NULL;
     return temp;
 }
 
-void printTree(struct node *root, string indent = "", bool last = true) { // toString() atitikmuo
+void printTree(Node *root, string indent = "", bool last = true) { // toString() atitikmuo
     // rood - nuo kurio mazgo pradės spausdinti medį
     // indent - įtraukos eil.
     // last - ar mazgas paskutinis savo lygyje
@@ -36,7 +36,7 @@ void printTree(struct node *root, string indent = "", bool last = true) { // toS
     }
 }
 
-struct node *insert(struct node *node, int key) {
+Node *insert(Node *node, int key) {
     if (node == NULL) {
         return createNewNode(key);
     }
@@ -48,87 +48,92 @@ struct node *insert(struct node *node, int key) {
     return node;
 }
 
-struct node *minValueNode(struct node *node) {
-    struct node *current = node; // laikina virsune
+Node *minValueNode(Node *node) {
+    Node *current = node;
     while (current && current->left != NULL)
         current = current->left;
     return current;
 }
 
-struct node *maxValueNode(struct node *node) {
-    struct node *current = node; // laikina virsune
+Node *maxValueNode(Node *node) {
+    Node *current = node;
     while (current && current->right != NULL)
         current = current->right;
     return current;
 }
 
-struct node *deleteNode(struct node *root, int key) {
+Node *deleteNode(Node *root, int key) {
     if (root == NULL) {
         return root;
     }
-
     if (key < root->key) {
         root->left = deleteNode(root->left, key);
     }
     else if (key > root->key) {
         root->right = deleteNode(root->right, key);
     }
-    else { // rasta virsune kuria reikia istrinti
-        // jei turi tik viena pomedi
+    else { // Rasta viršūnė, kurią reikia ištrinti (ir ji turi tik 1 pomedį)
         if (root->left == NULL) {
-            struct node *temp = root->right; // sukuriama laikina virsune kad neprarasti pomedzio reiksmes
+            Node *temp = root->right; // Laikina viršūnė, kad neprarasti pomedžio reikšmės
             free(root);
             return temp;
         } else if (root->right == NULL) {
-            struct node *temp = root->left;
+            Node *temp = root->left;
             free(root);
             return temp;
         }
-        //?
-        // jei turi du pomedzius
-        struct node *temp = minValueNode(root->right);
-        // istrintos virsunes vieta uzima jos kairysis pomedis
+        // Jei turi du pomedžius
+        Node *temp = minValueNode(root->right);
+        // Ištrintos viršūnės vietą užima mažiausia reikšmė dešiniajame pomedyje
         root->key = temp->key;
-        // Delete the inorder successor
+        // Ta reikšmė pašalinama iš dešiniojo pomedžio, kad nesikartotų
         root->right = deleteNode(root->right, temp->key);
     }
     return root;
 }
 
-
-//////////
-int countNodes(struct node* root) {
+// Visų šitų fuunkcijų reikės subalansavimo funkcijai
+int countNodes(Node* root) {
     if (root == NULL) return 0;
     return countNodes(root->left) + countNodes(root->right) + 1;
 }
-void storeBSTNodes(struct node* root, struct node* nodes[], int* index) {
+// Čia In-order traversal - kairės reikšmės, viršūnė, dešinės reikšmės
+void storeNodes(Node* root, Node* nodes[], int* index) {
     if (root == NULL) return;
-    storeBSTNodes(root->left, nodes, index);
-    nodes[*index] = root;
-    (*index)++;
-    storeBSTNodes(root->right, nodes, index);
+    storeNodes(root->left, nodes, index);
+    nodes[*index] = root; // Susideda viršūnes į masyvą
+    ++(*index);
+    storeNodes(root->right, nodes, index);
 }
-struct node* buildTreeUtil(struct node* nodes[], int start, int end) {
+Node* buildTree(Node* nodes[], int start, int end) {
     if (start > end) return NULL;
     int mid = (start + end) / 2;
-    struct node* root = nodes[mid];
-    root->left = buildTreeUtil(nodes, start, mid - 1);
-    root->right = buildTreeUtil(nodes, mid + 1, end);
+    Node* root = nodes[mid]; // Paima vidurinį el. masyve
+    root->left = buildTree(nodes, start, mid-1); // Jo kairys pomedis
+    root->right = buildTree(nodes, mid+1, end); // Dešinys pomedis
     return root;
 }
-struct node* balance(struct node* root) {
+Node* balance(Node* root) { 
     int n = countNodes(root);
-    struct node* nodes[n];
+    Node* nodes[n];
     int index = 0;
-    storeBSTNodes(root, nodes, &index);
-    return buildTreeUtil(nodes, 0, n - 1);
+    storeNodes(root, nodes, &index);
+    return buildTree(nodes, 0, n - 1);
 }
-///////////
+// Iki čia buvo funkcijos, skirtos medžiui subalansuoti
 
-void destroy(struct node *root) { // kaip Destructor Done() - sunaikina ADT
+// void destroy(Node *root) { // kaip Destructor Done() - sunaikina ADT
+//     if (root != NULL) {
+//         destroy(root->left);
+//         destroy(root->right);
+//         free(root); // Atlaisviname atmintį, skirtą dabartiniam mazgui
+//     }
+// }
+Node* destroy(Node *root) { // kaip Destructor Done() - sunaikina ADT
     if (root != NULL) {
         destroy(root->left);
         destroy(root->right);
         free(root); // Atlaisviname atmintį, skirtą dabartiniam mazgui
     }
+    return NULL;
 }
