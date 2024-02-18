@@ -6,4 +6,4 @@ goto :toliau
 :savasPC
 make
 :toliau
-test.exe > test.txt
+node3.exe > node3.txt

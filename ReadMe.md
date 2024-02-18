@@ -6,7 +6,8 @@ Tai hierarchinė duomenų struktūra. Joje į kiekvieną `viršūnę`, išskyrus
 
 `Dvejetainiame` medyje iš kiekvienos viršūnės yra ne daugiau nei dvi nuorodos į kitas viršūnes.
 
-Šis medis turi `subalansavimo` funkciją. Tai reiškia, kad subalansuotame medyje medžio viršūnės kairėje esantis pomedis laiko mažesnę reikšmę nei viršūnė, o esantis dešinėje - didesnę.
+Šis medis turi `subalansavimo` funkciją. Tai reiškia, kad subalansuotas medis yra dvejetainis medis, kuriame visi lygiai, išskyrus paskutinį, yra pilnai užpildyti.
+Subalansuotame medyje medžio viršūnės kairėje esantis pomedis laiko mažesnę reikšmę nei viršūnė, o esantis dešinėje - didesnę.
 
 ### Darbą sudarantys failai:
 1. main.cpp, tree.h, tree.o - kodas, realizuota ADS.
