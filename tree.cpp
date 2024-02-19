@@ -7,6 +7,18 @@ Node *createEmptyTree() { // kaip (?) Constructor Create() - sukuria tuščią A
     return NULL;
 }
 
+void isEmpty(Node* root) {
+    int n = countNodes(root);
+    if (n == 0) {
+        cout << "Medis yra tuščias." << endl; 
+    } else {
+        cout << "Medis nėra tuščias ir turi " << n << " viršūnes/(ių)." << endl; 
+    }
+}
+
+// bool isFullTree(Node* root) {...
+
+
 Node *createNewNode(int item) {
     Node *temp = (Node*)malloc(sizeof(Node));
     temp->key = item;
@@ -15,10 +27,6 @@ Node *createNewNode(int item) {
 }
 
 void printTree(Node *root, string indent = "", bool last = true) { // toString() atitikmuo
-    // rood - nuo kurio mazgo pradės spausdinti medį
-    // indent - įtraukos eil.
-    // last - ar mazgas paskutinis savo lygyje
-    // čia root (pats pirmas žymimas kaip R)
     if (root != NULL) {
         // Nes jei medis būtų tuščias, nieko nespausdintų
         cout << indent;
@@ -36,17 +44,18 @@ void printTree(Node *root, string indent = "", bool last = true) { // toString()
     }
 }
 
-Node *insert(Node *node, int key) {
-    if (node == NULL) {
+Node *insert(Node *node, int key) { // node - rodyklė į dabartinę viršūnę, kuriai vyksta įterpimas
+    if (node == NULL) { // Medis tuščias/pasiektas lapas
         return createNewNode(key);
-    }
+    }  // negali būti vienodų reikšmių
     if (key < node->key) {
         node->left = insert(node->left, key);
-    } else {
+    } else if (key > node->key) {
         node->right = insert(node->right, key);
-    }
+    } 
     return node;
 }
+// Kažką įterpus vėl reiktų subalansuoti
 
 Node *minValueNode(Node *node) {
     Node *current = node;
@@ -82,14 +91,26 @@ Node *deleteNode(Node *root, int key) {
             free(root);
             return temp;
         }
+        // // Jei turi du pomedžius
+        // Node *temp = minValueNode(root->right);
+        // // Ištrintos viršūnės vietą užima mažiausia reikšmė dešiniajame pomedyje
+        // root->key = temp->key;
+        // // Ta reikšmė pašalinama iš dešiniojo pomedžio, kad nesikartotų
+        // root->right = deleteNode(root->right, temp->key);
+        // ARBA
         // Jei turi du pomedžius
-        Node *temp = minValueNode(root->right);
-        // Ištrintos viršūnės vietą užima mažiausia reikšmė dešiniajame pomedyje
+        Node *temp = maxValueNode(root->left);
+        // Ištrintos viršūnės vietą užima did. reikšmė kair. pomedyje
         root->key = temp->key;
-        // Ta reikšmė pašalinama iš dešiniojo pomedžio, kad nesikartotų
-        root->right = deleteNode(root->right, temp->key);
+        // Ta reikšmė pašalinama iš kair. pomedžio, kad nesikartotų
+        root->left = deleteNode(root->left, temp->key);
     }
     return root;
+}
+
+int height(Node* root) {
+  if (root == NULL) return 0;
+  return 1 + max(height(root->left), height(root->right));
 }
 
 // Visų šitų fuunkcijų reikės subalansavimo funkcijai
@@ -118,17 +139,17 @@ Node* balance(Node* root) {
     Node* nodes[n];
     int index = 0;
     storeNodes(root, nodes, &index);
+
+    // cout << "\n\nViršūnių reikšmės sudėtos taip:" << endl;
+    // for (int i = 0; i < n; ++i) {
+    //     cout << nodes[i]->key << " "; // kas cia blogai?
+    // }
+    // cout << endl << endl;
+
     return buildTree(nodes, 0, n - 1);
 }
 // Iki čia buvo funkcijos, skirtos medžiui subalansuoti
 
-// void destroy(Node *root) { // kaip Destructor Done() - sunaikina ADT
-//     if (root != NULL) {
-//         destroy(root->left);
-//         destroy(root->right);
-//         free(root); // Atlaisviname atmintį, skirtą dabartiniam mazgui
-//     }
-// }
 Node* destroy(Node *root) { // kaip Destructor Done() - sunaikina ADT
     if (root != NULL) {
         destroy(root->left);

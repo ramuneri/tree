@@ -23,4 +23,8 @@ Node* balance(Node* root);
 // void destroy(Node *root);
 Node* destroy(Node *root);
 
+void isEmpty(Node* root);
+int height(Node* root);
+bool isFullTree(Node* root);
+
 #endif // TREE_H

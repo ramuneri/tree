@@ -9,6 +9,20 @@ Tai hierarchinė duomenų struktūra. Joje į kiekvieną `viršūnę`, išskyrus
 Šis medis turi `subalansavimo` funkciją. Tai reiškia, kad subalansuotas medis yra dvejetainis medis, kuriame visi lygiai, išskyrus paskutinį, yra pilnai užpildyti.
 Subalansuotame medyje medžio viršūnės kairėje esantis pomedis laiko mažesnę reikšmę nei viršūnė, o esantis dešinėje - didesnę.
 
+### Dvejetainį medį realizuojančios funkcijos:
+* Tuščio medžio sukūrimas
+* Naujos viršūnės sukūrimas
+* Naujos viršūnės įterpimas
+* Tikrinimas ar medis tuščias
+* Tikrinimas ar medis pilnas
+* Viršūnės su mažiausia reikšme radimas
+* Viršūnės su didžiausia reikšme radimas
+* Viršūnių suskaičiavimas
+* Medžio aukščio suskaičiavimas
+* Medžio subalansavimas!
+* Viršūnės ištrinimas
+* Viso medžio sunaikinimas
+
 ### Darbą sudarantys failai:
 1. main.cpp, tree.h, tree.o - kodas, realizuota ADS.
 2. ReadMe.md - trumpas darbo apibūdinimas.
