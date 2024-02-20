@@ -25,6 +25,6 @@ Node* destroy(Node *root);
 
 void isEmpty(Node* root);
 int height(Node* root);
-bool isFullTree(Node* root);
-
+bool isFull(Node* root);
+int findLevel(Node* root, int key, int level);
 #endif // TREE_H

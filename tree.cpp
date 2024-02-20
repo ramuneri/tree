@@ -16,8 +16,28 @@ void isEmpty(Node* root) {
     }
 }
 
-// bool isFullTree(Node* root) {...
+bool isFull(Node* root) {
+    if (root == NULL) {
+        return true;
+    }
+    // Jeigu nėra abiejų vaikų arba yra abu vaikai
+    if ((root->left == NULL && root->right != NULL) || (root->left != NULL && root->right == NULL)) {
+        return false;
+    }
+    // Tikriname rekursyviai kiekvieną vaikų šaknį
+    return isFull(root->left) && isFull(root->right);
+}
 
+
+bool isComplete(Node* root) {
+    if (root == NULL || (root->left == NULL && root->right == NULL) ) {
+        return true;
+    }
+    if ((root->left == NULL && root->right != NULL) || (root->left != NULL && root->right == NULL)) {
+        return false;
+    }
+    return isFull(root->left) && isFull(root->right);
+}
 
 Node *createNewNode(int item) {
     Node *temp = (Node*)malloc(sizeof(Node));
@@ -111,6 +131,22 @@ Node *deleteNode(Node *root, int key) {
 int height(Node* root) {
   if (root == NULL) return 0;
   return 1 + max(height(root->left), height(root->right));
+}
+
+int findLevel(Node* root, int key, int level) {
+    if (root == nullptr)
+        return -1; // Jei mazgas neegzistuoja, grąžiname -1
+
+    if (root->key == key)
+        return level; // Jei esame pasiekę ieškomą mazgą, grąžiname jo lygį
+
+    // Ieškome kiekvieno vaiko mazgo lygį, padidindami esamą lygį vienetu
+    int left_level = findLevel(root->left, key, level + 1);
+    if (left_level != -1)
+        return left_level;
+
+    int right_level = findLevel(root->right, key, level + 1);
+    return right_level;
 }
 
 // Visų šitų fuunkcijų reikės subalansavimo funkcijai

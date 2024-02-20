@@ -5,9 +5,6 @@ using namespace std;
 
 int main() {
     struct node* root = createEmptyTree();
-    // root = insert(root, 4);
-    // root = insert(root, 1);
-    // root = insert(root, 2);
     root = insert(root, 7);
     root = insert(root, 1);
     root = insert(root, 2);
@@ -18,11 +15,15 @@ int main() {
 
     cout << "Before balancing: " << endl;
     printTree(root, "", true);
-    if (isFullTree) {
+    
+    if (isFull (root)) {
         cout << "*Šitas medis pilnas." << endl;
     } else {
         cout << "*Šitas medis nepilnas." << endl;
     }
+    cout << "7 lygis: " << findLevel(root, 7, 0) << endl;
+    cout << "3 lygis: " << findLevel(root, 3, 0) << endl;
+    cout << "5 lygis: " << findLevel(root, 5, 0) << endl;
 
 
     root = balance(root);
@@ -39,7 +40,7 @@ int main() {
     cout << "Viršūnių iš viso: " << countNodes(root) << endl;
     cout << "Medžio aukštis: " << height(root) << endl;
     isEmpty(root);
-    if (isFullTree) {
+    if (isFull(root)) {
         cout << "*Šitas medis pilnas." << endl;
     } else {
         cout << "*Šitas medis nepilnas." << endl;
