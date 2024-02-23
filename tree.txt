@@ -1,0 +1,41 @@
+Before balancing: 
+R-----7
+    L-----1
+    |   R-----2
+    |       R-----6
+    |           L-----5
+    |           |   L-----4
+    |           |   |   L-----3
+*Šitas medis nepilnas.
+7 lygis: 1
+3 lygis: 7
+5 lygis: 5
+Balanced: 
+R-----4
+    L-----2
+    |   L-----1
+    |   R-----3
+    R-----6
+        L-----5
+        R-----7
+istryne 3
+R-----4
+    L-----2
+    |   L-----1
+    R-----6
+        L-----5
+        R-----7
+Viršūnių iš viso: 6
+Medžio aukštis: 3
+Medis nėra tuščias ir turi 6 viršūnes/(ių).
+*Šitas medis nepilnas.
+Nuklonuotass: 
+R-----4
+    L-----2
+    |   L-----1
+    R-----6
+        L-----5
+        R-----7
+Sunaikinus, medžio nebėra wowwwa: 
+Medis yra tuščias.
+----PABAIGA----

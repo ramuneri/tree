@@ -1,9 +1,9 @@
-if .%RAMUNE% == .SavasPC goto :savasPC
+if .%USERDOMAIN% == .RAMUNE goto :savasPC
 Rem MIF kompiuteris
-path C:\PROGRA~2\Dev-Cpp\MinGW64\bin\;%path%
+path C:\msys64\ucrt64\bin\g++.exe;%path%
 mingw32-make.exe
 goto :toliau
 :savasPC
 make
 :toliau
-node3.exe > node3.txt
+tree.exe > tree.txt
