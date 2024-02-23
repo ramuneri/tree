@@ -6,10 +6,10 @@ R-----7
     |           L-----5
     |           |   L-----4
     |           |   |   L-----3
+    R-----8
 *Šitas medis nepilnas.
 7 lygis: 1
-3 lygis: 7
-5 lygis: 5
+Medyje nėra nurodyto elemento.
 Balanced: 
 R-----4
     L-----2
@@ -18,16 +18,20 @@ R-----4
     R-----6
         L-----5
         R-----7
-istryne 3
+            R-----8
+Min = 1
+Max = 8
+Ištrynus 3: 
 R-----4
     L-----2
     |   L-----1
     R-----6
         L-----5
         R-----7
-Viršūnių iš viso: 6
-Medžio aukštis: 3
-Medis nėra tuščias ir turi 6 viršūnes/(ių).
+            R-----8
+Viršūnių iš viso: 7
+Medžio aukštis: 4
+Medis nėra tuščias ir turi 7 viršūnes/(ių).
 *Šitas medis nepilnas.
 Nuklonuotass: 
 R-----4
@@ -36,6 +40,7 @@ R-----4
     R-----6
         L-----5
         R-----7
-Sunaikinus, medžio nebėra wowwwa: 
+            R-----8
+Sunaikinus, medžio nebėra: 
 Medis yra tuščias.
 ----PABAIGA----

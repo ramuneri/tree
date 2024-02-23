@@ -4,39 +4,58 @@
 using namespace std;
 
 int main() {
+    // Testavimas
+    // Sukūriamas medis, įterpiamos reikšmės
     Node* root = createEmptyTree();
     root = insert(root, 7);
     root = insert(root, 1);
+    root = insert(root, 8);
     root = insert(root, 2);
     root = insert(root, 6);
     root = insert(root, 5);
+    root = insert(root, 1);
     root = insert(root, 4);
     root = insert(root, 3);
 
+
+    // Pradinis medis
     cout << "Before balancing: " << endl;
     printTree(root, "", true);
     
+    // Ar pilnas
     if (isFull (root)) {
         cout << "*Šitas medis pilnas." << endl;
     } else {
         cout << "*Šitas medis nepilnas." << endl;
     }
-    cout << "7 lygis: " << findLevel(root, 7, 1) << endl;
-    cout << "3 lygis: " << findLevel(root, 3, 1) << endl;
-    cout << "5 lygis: " << findLevel(root, 5, 1) << endl;
 
+    // Kokiame lygyje yra atitinkami elementai
+    if (findLevel(root, 7, 1) != -1) {
+        cout << "7 lygis: " << findLevel(root, 7, 1) << endl;
+    } else {
+        cout << "Medyje nėra nurodyto elemento." << endl;
+    }
+    if (findLevel(root,  17, 1) != -1) {
+        cout << "17 lygis: " << findLevel(root, 7, 1) << endl;
+    } else {
+        cout << "Medyje nėra nurodyto elemento." << endl;
+    }
 
+    // Medis subalansuojamas
     root = balance(root);
     cout << "Balanced: " << endl;
     printTree(root, "", true);
 
-    // cout << "Min = " << minValueNode(root)->key << endl;
-    // cout << "Max = " << maxValueNode(root)->key << endl;
+    // Randamos min ir max reikšmės medyje
+    cout << "Min = " << minValue(root)->key << endl;
+    cout << "Max = " << maxValue(root)->key << endl;
 
+    // Ištrinamas nurodytas elementas
     root = deleteNode(root, 3);
-    cout << "istryne 3" << endl;
+    cout << "Ištrynus 3: " << endl;
     printTree(root, "", true);
 
+    // Dar info apie esamą medį
     cout << "Viršūnių iš viso: " << countNodes(root) << endl;
     cout << "Medžio aukštis: " << height(root) << endl;
     isEmpty(root);
@@ -46,16 +65,17 @@ int main() {
         cout << "*Šitas medis nepilnas." << endl;
     }
 
+    // Dar kartą atspausdinamas nuklonuotas medis
     cout << "Nuklonuotass: " << endl;
     Node* root2 = cloneTree(root);
     printTree(root2, "", true);
 
-
-
-    cout << "Sunaikinus, medžio nebėra wowwwa: " << endl;
+    // Medis sunaikinamas, todėl neiko nespausdina
+    cout << "Sunaikinus, medžio nebėra: " << endl;
     root = destroy(root);
     printTree(root, "", true);
 
+    // Patikrina, ar tikrai medžio nebėra (tuščias)
     isEmpty(root);
     cout << "----PABAIGA----" << endl;
     return 0;
