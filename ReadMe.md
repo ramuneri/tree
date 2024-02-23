@@ -2,11 +2,11 @@
 ### Trumpas darbo apibūdinimas laisva forma
 
 ## ADS - Dvejetainis paieškos medis
-Tai hierarchinė duomenų struktūra. Joje į kiekvieną `viršūnę`, išskyrus vieną (`šaknį`), yra tik vienintelė nuoroda iš kitos viršūnės.
+* Tai hierarchinė duomenų struktūra. Joje į kiekvieną `viršūnę`, išskyrus vieną (`šaknį`), yra tik vienintelė nuoroda iš kitos viršūnės.
 
-`Dvejetainiame` medyje iš kiekvienos viršūnės yra ne daugiau nei dvi nuorodos į kitas viršūnes.
+* `Dvejetainiame` medyje iš kiekvienos viršūnės yra ne daugiau nei dvi nuorodos į kitas viršūnes.
 
-Šis medis turi `subalansavimo` funkciją. Tai reiškia, kad subalansuotas medis yra dvejetainis medis, kuriame visi lygiai, išskyrus paskutinį, yra pilnai užpildyti.
+* Šis medis turi `subalansavimo` funkciją. Tai reiškia, kad subalansuotas medis yra dvejetainis medis, kuriame visi lygiai, išskyrus paskutinį, yra pilnai užpildyti.
 Subalansuotame medyje medžio viršūnės kairėje esantis pomedis laiko mažesnę reikšmę nei viršūnė, o esantis dešinėje - didesnę.
 
 ### Dvejetainį medį realizuojančios funkcijos:

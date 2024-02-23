@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    struct node* root = createEmptyTree();
+    Node* root = createEmptyTree();
     root = insert(root, 7);
     root = insert(root, 1);
     root = insert(root, 2);
@@ -21,9 +21,9 @@ int main() {
     } else {
         cout << "*Šitas medis nepilnas." << endl;
     }
-    cout << "7 lygis: " << findLevel(root, 7, 0) << endl;
-    cout << "3 lygis: " << findLevel(root, 3, 0) << endl;
-    cout << "5 lygis: " << findLevel(root, 5, 0) << endl;
+    cout << "7 lygis: " << findLevel(root, 7, 1) << endl;
+    cout << "3 lygis: " << findLevel(root, 3, 1) << endl;
+    cout << "5 lygis: " << findLevel(root, 5, 1) << endl;
 
 
     root = balance(root);
@@ -45,6 +45,12 @@ int main() {
     } else {
         cout << "*Šitas medis nepilnas." << endl;
     }
+
+    cout << "Nuklonuotass: " << endl;
+    Node* root2 = cloneTree(root);
+    printTree(root2, "", true);
+
+
 
     cout << "Sunaikinus, medžio nebėra wowwwa: " << endl;
     root = destroy(root);

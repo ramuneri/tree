@@ -3,40 +3,8 @@
 #include "tree.h"
 using namespace std;
 
-Node *createEmptyTree() { // kaip (?) Constructor Create() - sukuria tuščią ADT
+Node *createEmptyTree() {
     return NULL;
-}
-
-void isEmpty(Node* root) {
-    int n = countNodes(root);
-    if (n == 0) {
-        cout << "Medis yra tuščias." << endl; 
-    } else {
-        cout << "Medis nėra tuščias ir turi " << n << " viršūnes/(ių)." << endl; 
-    }
-}
-
-bool isFull(Node* root) {
-    if (root == NULL) {
-        return true;
-    }
-    // Jeigu nėra abiejų vaikų arba yra abu vaikai
-    if ((root->left == NULL && root->right != NULL) || (root->left != NULL && root->right == NULL)) {
-        return false;
-    }
-    // Tikriname rekursyviai kiekvieną vaikų šaknį
-    return isFull(root->left) && isFull(root->right);
-}
-
-
-bool isComplete(Node* root) {
-    if (root == NULL || (root->left == NULL && root->right == NULL) ) {
-        return true;
-    }
-    if ((root->left == NULL && root->right != NULL) || (root->left != NULL && root->right == NULL)) {
-        return false;
-    }
-    return isFull(root->left) && isFull(root->right);
 }
 
 Node *createNewNode(int item) {
@@ -46,25 +14,7 @@ Node *createNewNode(int item) {
     return temp;
 }
 
-void printTree(Node *root, string indent = "", bool last = true) { // toString() atitikmuo
-    if (root != NULL) {
-        // Nes jei medis būtų tuščias, nieko nespausdintų
-        cout << indent;
-        // Ar tai paskutinis to lygio node (lapas)
-        if (last) {
-            cout << "R-----";
-            indent += "    ";
-        } else {
-            cout << "L-----";
-            indent += "|   ";
-        }
-        cout << root->key << endl;
-        printTree(root->left, indent, false);
-        printTree(root->right, indent, true);
-    }
-}
-
-Node *insert(Node *node, int key) { // node - rodyklė į dabartinę viršūnę, kuriai vyksta įterpimas
+Node *insert(Node *node, int key) {
     if (node == NULL) { // Medis tuščias/pasiektas lapas
         return createNewNode(key);
     }  // negali būti vienodų reikšmių
@@ -111,42 +61,14 @@ Node *deleteNode(Node *root, int key) {
             free(root);
             return temp;
         }
-        // // Jei turi du pomedžius
-        // Node *temp = minValueNode(root->right);
-        // // Ištrintos viršūnės vietą užima mažiausia reikšmė dešiniajame pomedyje
-        // root->key = temp->key;
-        // // Ta reikšmė pašalinama iš dešiniojo pomedžio, kad nesikartotų
-        // root->right = deleteNode(root->right, temp->key);
-        // ARBA
         // Jei turi du pomedžius
-        Node *temp = maxValueNode(root->left);
-        // Ištrintos viršūnės vietą užima did. reikšmė kair. pomedyje
+        Node *temp = minValueNode(root->right);
+        // Ištrintos viršūnės vietą užima mažiausia reikšmė dešiniajame pomedyje
         root->key = temp->key;
-        // Ta reikšmė pašalinama iš kair. pomedžio, kad nesikartotų
-        root->left = deleteNode(root->left, temp->key);
+        // Ta reikšmė pašalinama iš dešiniojo pomedžio, kad nesikartotų
+        root->right = deleteNode(root->right, temp->key);
     }
     return root;
-}
-
-int height(Node* root) {
-  if (root == NULL) return 0;
-  return 1 + max(height(root->left), height(root->right));
-}
-
-int findLevel(Node* root, int key, int level) {
-    if (root == nullptr)
-        return -1; // Jei mazgas neegzistuoja, grąžiname -1
-
-    if (root->key == key)
-        return level; // Jei esame pasiekę ieškomą mazgą, grąžiname jo lygį
-
-    // Ieškome kiekvieno vaiko mazgo lygį, padidindami esamą lygį vienetu
-    int left_level = findLevel(root->left, key, level + 1);
-    if (left_level != -1)
-        return left_level;
-
-    int right_level = findLevel(root->right, key, level + 1);
-    return right_level;
 }
 
 // Visų šitų fuunkcijų reikės subalansavimo funkcijai
@@ -176,17 +98,11 @@ Node* balance(Node* root) {
     int index = 0;
     storeNodes(root, nodes, &index);
 
-    // cout << "\n\nViršūnių reikšmės sudėtos taip:" << endl;
-    // for (int i = 0; i < n; ++i) {
-    //     cout << nodes[i]->key << " "; // kas cia blogai?
-    // }
-    // cout << endl << endl;
-
     return buildTree(nodes, 0, n - 1);
 }
 // Iki čia buvo funkcijos, skirtos medžiui subalansuoti
 
-Node* destroy(Node *root) { // kaip Destructor Done() - sunaikina ADT
+Node* destroy(Node *root) {
     if (root != NULL) {
         destroy(root->left);
         destroy(root->right);
@@ -194,3 +110,88 @@ Node* destroy(Node *root) { // kaip Destructor Done() - sunaikina ADT
     }
     return NULL;
 }
+
+int height(Node* root) {
+  if (root == NULL) return 0;
+  return 1 + max(height(root->left), height(root->right));
+}
+
+int findLevel(Node* root, int key, int level) { //Jei viršūnė yra medžio šaknis, tai jos lygis 1
+    if (root == NULL) {
+        return -1; // Jei neegzistuoja
+    }
+    if (root->key == key) {
+        return level; // Jei randam reikiamą, grąžinam jo lygį
+    }
+    // Ieškome kiekvieno vaiko mazgo lygį, padidindami esamą lygį vienetu
+    int leftLevel = findLevel(root->left, key, level+1);
+    if (leftLevel != -1) {
+        return leftLevel;
+    }
+    int rightLevel = findLevel(root->right, key, level+1);
+    return rightLevel;
+}
+
+bool isFull(Node* root) { //TODO
+    if (root == NULL) {
+        return true;
+    }
+    // Jeigu nėra abiejų vaikų arba yra abu vaikai
+    if ((root->left == NULL && root->right != NULL) || (root->left != NULL && root->right == NULL)) {
+        return false;
+    }
+    // Tikriname rekursyviai kiekvieną vaikų šaknį
+    return isFull(root->left) && isFull(root->right);
+}
+
+void isEmpty(Node* root) {
+    int n = countNodes(root);
+    if (n == 0) {
+        cout << "Medis yra tuščias." << endl; 
+    } else {
+        cout << "Medis nėra tuščias ir turi " << n << " viršūnes/(ių)." << endl; 
+    }
+}
+
+bool isComplete(Node* root) { //TODO
+    if (root == NULL || (root->left == NULL && root->right == NULL) ) {
+        return true;
+    }
+    if ((root->left == NULL && root->right != NULL) || (root->left != NULL && root->right == NULL)) {
+        return false;
+    }
+    return isFull(root->left) && isFull(root->right);
+}
+
+void printTree(Node *root, string indent = "", bool last = true) {
+    if (root != NULL) {
+        // Nes jei medis būtų tuščias, nieko nespausdintų
+        cout << indent;
+        // Ar tai paskutinis to lygio node (lapas)
+        if (last) {
+            cout << "R-----";
+            indent += "    ";
+        } else {
+            cout << "L-----";
+            indent += "|   ";
+        }
+        cout << root->key << endl;
+        printTree(root->left, indent, false);
+        printTree(root->right, indent, true);
+    }
+}
+
+
+
+Node *cloneTree(Node *root) {
+    if (root == NULL) {
+        return NULL;
+    } else {
+        Node *newNode = createNewNode(root->key);
+        newNode->left = cloneTree(root->left);
+        newNode->right = cloneTree(root->right);
+        return newNode;
+    }
+}
+
+
