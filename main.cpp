@@ -57,6 +57,7 @@ int main() {
     printTree(root, "", true);
 
     isEmpty(root);
+    cout << "PABAIGA" << endl;
     return 0;
 }
 

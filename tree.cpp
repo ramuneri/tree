@@ -27,18 +27,29 @@ Node *insert(Node *node, int key) {
 }
 // Kažką įterpus vėl reiktų subalansuoti
 
-Node *minValueNode(Node *node) {
+Node *minValue(Node *node) {
     Node *current = node;
     while (current && current->left != NULL)
         current = current->left;
     return current;
 }
 
-Node *maxValueNode(Node *node) {
+Node *maxValue(Node *node) {
     Node *current = node;
     while (current && current->right != NULL)
         current = current->right;
     return current;
+}
+
+Node *cloneTree(Node *root) {
+    if (root == NULL) {
+        return NULL;
+    } else {
+        Node *newNode = createNewNode(root->key);
+        newNode->left = cloneTree(root->left);
+        newNode->right = cloneTree(root->right);
+        return newNode;
+    }
 }
 
 Node *deleteNode(Node *root, int key) {
@@ -62,7 +73,7 @@ Node *deleteNode(Node *root, int key) {
             return temp;
         }
         // Jei turi du pomedžius
-        Node *temp = minValueNode(root->right);
+        Node *temp = minValue(root->right);
         // Ištrintos viršūnės vietą užima mažiausia reikšmė dešiniajame pomedyje
         root->key = temp->key;
         // Ta reikšmė pašalinama iš dešiniojo pomedžio, kad nesikartotų
@@ -183,15 +194,6 @@ void printTree(Node *root, string indent = "", bool last = true) {
 
 
 
-Node *cloneTree(Node *root) {
-    if (root == NULL) {
-        return NULL;
-    } else {
-        Node *newNode = createNewNode(root->key);
-        newNode->left = cloneTree(root->left);
-        newNode->right = cloneTree(root->right);
-        return newNode;
-    }
-}
+
 
 
