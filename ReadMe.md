@@ -13,18 +13,23 @@ Subalansuotame medyje medžio viršūnės kairėje esantis pomedis laiko mažesn
 * Tuščio medžio sukūrimas
 * Naujos viršūnės sukūrimas
 * Naujos viršūnės įterpimas
-* Tikrinimas ar medis tuščias
-* Tikrinimas ar medis pilnas
 * Viršūnės su mažiausia reikšme radimas
 * Viršūnės su didžiausia reikšme radimas
+* Medžio klonavimas
+* Viršūnės ištrinimas
+* Medžio subalansavimas!
+* Viso medžio sunaikinimas
 * Viršūnių suskaičiavimas
 * Medžio aukščio suskaičiavimas
-* Medžio subalansavimas!
-* Viršūnės ištrinimas
-* Viso medžio sunaikinimas
+* Medžio elemento lygio radimas
+* Tikrinimas ar medis pilnas
+* Tikrinimas ar medis tuščias
+* Tikrinimas ar medis yra baigtas
+* Viso medžio atspausdinimas
+
 
 ### Darbą sudarantys failai:
-1. main.cpp, tree.h, tree.o - kodas, realizuota ADS.
+1. main.cpp, tree.cpph, tree.h - kodas, realizuota ADS.
 2. ReadMe.md - trumpas darbo apibūdinimas.
 3. Go.cmd arba Go.bat - transliavimo make failas.
 4. Makefile - transliavimo make failas.

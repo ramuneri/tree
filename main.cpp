@@ -5,6 +5,8 @@ using namespace std;
 
 int main() {
     // Testavimas
+    cout << "----TESTAVIMAS----" << endl;
+
     // Sukūriamas medis, įterpiamos reikšmės
     Node* root = createEmptyTree();
     root = insert(root, 7);
@@ -17,9 +19,8 @@ int main() {
     root = insert(root, 4);
     root = insert(root, 3);
 
-
     // Pradinis medis
-    cout << "Before balancing: " << endl;
+    cout << "Prieš subalansavimą: " << endl;
     printTree(root, "", true);
     
     // Ar pilnas
@@ -30,8 +31,8 @@ int main() {
     }
 
     // Kokiame lygyje yra atitinkami elementai
-    if (findLevel(root, 7, 1) != -1) {
-        cout << "7 lygis: " << findLevel(root, 7, 1) << endl;
+    if (findLevel(root, 3, 1) != -1) {
+        cout << "7 lygis: " << findLevel(root, 3, 1) << endl;
     } else {
         cout << "Medyje nėra nurodyto elemento." << endl;
     }
@@ -43,7 +44,7 @@ int main() {
 
     // Medis subalansuojamas
     root = balance(root);
-    cout << "Balanced: " << endl;
+    cout << "Subalansuotas: " << endl;
     printTree(root, "", true);
 
     // Randamos min ir max reikšmės medyje
@@ -58,11 +59,23 @@ int main() {
     // Dar info apie esamą medį
     cout << "Viršūnių iš viso: " << countNodes(root) << endl;
     cout << "Medžio aukštis: " << height(root) << endl;
-    isEmpty(root);
+
+    if (isEmpty(root)) {
+        cout << "*Šitas medis tuščias." << endl;
+    } else {
+        cout << "*Šitas medis nėra tuščias." << endl;
+    }
+
     if (isFull(root)) {
         cout << "*Šitas medis pilnas." << endl;
     } else {
         cout << "*Šitas medis nepilnas." << endl;
+    }
+
+    if (isComplete(root)) {
+        cout << "*Šitas medis baigtas." << endl;
+    } else {
+        cout << "*Šitas medis nėra baigtas." << endl;
     }
 
     // Dar kartą atspausdinamas nuklonuotas medis

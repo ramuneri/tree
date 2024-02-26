@@ -29,14 +29,14 @@ Node *insert(Node *node, int key) {
 
 Node *minValue(Node *node) {
     Node *current = node;
-    while (current && current->left != NULL)
+    while (current->left != NULL)
         current = current->left;
     return current;
 }
 
 Node *maxValue(Node *node) {
     Node *current = node;
-    while (current && current->right != NULL)
+    while (current->right != NULL)
         current = current->right;
     return current;
 }
@@ -82,21 +82,26 @@ Node *deleteNode(Node *root, int key) {
     return root;
 }
 
-// Visų šitų fuunkcijų reikės subalansavimo funkcijai
+// Visų šitų funkcijų reikės subalansavimo funkcijai
 int countNodes(Node* root) {
     if (root == NULL) return 0;
     return countNodes(root->left) + countNodes(root->right) + 1;
 }
 // Čia In-order traversal - kairės reikšmės, viršūnė, dešinės reikšmės
 void storeNodes(Node* root, Node* nodes[], int* index) {
-    if (root == NULL) return;
+    if (root == NULL) {
+        return;
+    }
     storeNodes(root->left, nodes, index);
-    nodes[*index] = root; // Susideda viršūnes į masyvą
+    nodes[*index] = root; 
     ++(*index);
     storeNodes(root->right, nodes, index);
+    // Susideda viršūnes į masyvą (nuo maž. iki didž.)
 }
 Node* buildTree(Node* nodes[], int start, int end) {
-    if (start > end) return NULL;
+    if (start > end) {
+        return NULL;
+    }
     int mid = (start + end) / 2;
     Node* root = nodes[mid]; // Paima vidurinį el. masyve
     root->left = buildTree(nodes, start, mid-1); // Jo kairys pomedis
@@ -108,7 +113,6 @@ Node* balance(Node* root) {
     Node* nodes[n];
     int index = 0;
     storeNodes(root, nodes, &index);
-
     return buildTree(nodes, 0, n - 1);
 }
 // Iki čia buvo funkcijos, skirtos medžiui subalansuoti
@@ -117,14 +121,16 @@ Node* destroy(Node *root) {
     if (root != NULL) {
         destroy(root->left);
         destroy(root->right);
-        free(root); // Atlaisviname atmintį, skirtą dabartiniam mazgui
+        free(root);
     }
     return NULL;
 }
 
 int height(Node* root) {
-  if (root == NULL) return 0;
-  return 1 + max(height(root->left), height(root->right));
+    if (root == NULL) {
+        return 0;
+    }
+    return 1 + max(height(root->left), height(root->right));
 }
 
 int findLevel(Node* root, int key, int level) { //Jei viršūnė yra medžio šaknis, tai jos lygis 1
@@ -134,6 +140,7 @@ int findLevel(Node* root, int key, int level) { //Jei viršūnė yra medžio ša
     if (root->key == key) {
         return level; // Jei randam reikiamą, grąžinam jo lygį
     }
+
     // Ieškome kiekvieno vaiko mazgo lygį, padidindami esamą lygį vienetu
     int leftLevel = findLevel(root->left, key, level+1);
     if (leftLevel != -1) {
@@ -143,11 +150,10 @@ int findLevel(Node* root, int key, int level) { //Jei viršūnė yra medžio ša
     return rightLevel;
 }
 
-bool isFull(Node* root) { //TODO
+bool isFull(Node* root) { 
     if (root == NULL) {
         return true;
     }
-    // Jeigu nėra abiejų vaikų arba yra abu vaikai
     if ((root->left == NULL && root->right != NULL) || (root->left != NULL && root->right == NULL)) {
         return false;
     }
@@ -155,16 +161,16 @@ bool isFull(Node* root) { //TODO
     return isFull(root->left) && isFull(root->right);
 }
 
-void isEmpty(Node* root) {
+bool isEmpty(Node* root) {
     int n = countNodes(root);
     if (n == 0) {
-        cout << "Medis yra tuščias." << endl; 
+        return true;
     } else {
-        cout << "Medis nėra tuščias ir turi " << n << " viršūnes/(ių)." << endl; 
+        return false;
     }
 }
 
-bool isComplete(Node* root) { //TODO
+bool isComplete(Node* root) { // Visi lygiai, išskyrus galbūt paskutinįjį, yra pilni
     if (root == NULL || (root->left == NULL && root->right == NULL) ) {
         return true;
     }
