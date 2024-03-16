@@ -1,0 +1,47 @@
+----TESTAVIMAS----
+Prieš subalansavimą: 
+R-----7
+    L-----1
+    |   R-----2
+    |       R-----6
+    |           L-----5
+    |           |   L-----4
+    |           |   |   L-----3
+    R-----8
+*Šitas medis nepilnas.
+7 lygis: 7
+Medyje nėra nurodyto elemento.
+Subalansuotas: 
+R-----4
+    L-----2
+    |   L-----1
+    |   R-----3
+    R-----6
+        L-----5
+        R-----7
+            R-----8
+Min = 1
+Max = 8
+Ištrynus 3: 
+R-----4
+    L-----2
+    |   L-----1
+    R-----6
+        L-----5
+        R-----7
+            R-----8
+Viršūnių iš viso: 7
+Medžio aukštis: 4
+*Šitas medis nėra tuščias.
+*Šitas medis nepilnas.
+*Šitas medis nėra baigtas.
+Nuklonuotass: 
+R-----4
+    L-----2
+    |   L-----1
+    R-----6
+        L-----5
+        R-----7
+            R-----8
+Sunaikinus, medžio nebėra: 
+----PABAIGA----
